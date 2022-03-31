@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-web
+  labels:
+    app: content-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-web
+  template:
+    metadata:
+      labels:
+        app: content-web
+    spec:
+      containers:
+      - name: content-web
+        image: kubernators.azurecr.io/content-web:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: 500m
+            memory: 128M
+          limits:
+            cpu: 500m
+            memory: 128M
+        env:
+        - name: CONTENT_API_URL
+          value: "10.240.0.49"
