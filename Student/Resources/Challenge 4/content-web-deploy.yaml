@@ -28,4 +28,4 @@ spec:
             memory: 128M
         env:
         - name: CONTENT_API_URL
-          value: "10.240.0.49"
+          value: http://content-api-service:3001
