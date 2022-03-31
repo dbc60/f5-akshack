@@ -1,18 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: content-web
+  name: content-web-v1
   labels:
     app: content-web
+    version: "1"
 spec:
   replicas: 2
   selector:
     matchLabels:
       app: content-web
+      version: "1"
   template:
     metadata:
       labels:
         app: content-web
+        version: "1"
     spec:
       containers:
       - name: content-web

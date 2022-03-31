@@ -12,3 +12,4 @@ spec:
     protocol: TCP
   selector:
     app: content-api
+    version: "1"
