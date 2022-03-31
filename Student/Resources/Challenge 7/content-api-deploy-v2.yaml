@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-api-v2
+  labels:
+    app: content-api
+    version: "2"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-api
+      version: "2"
+  template:
+    metadata:
+      labels:
+        app: content-api
+        version: "2"
+    spec:
+      containers:
+      - name: content-api
+        image: whatthehackmsft/content-api:v2
+        ports:
+        - containerPort: 3001
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128M
+          limits:
+            cpu: 250m
+            memory: 128M
+        env:
+        - name: MONGODB_CONNECTION
+          value: mongodb://mongodb-service:27017/contentdb
+        livenessProbe:
+          httpGet:
+            path: /stats
+            port: 3001
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /stats
+            port: 3001
+          initialDelaySeconds: 3
+          periodSeconds: 3
