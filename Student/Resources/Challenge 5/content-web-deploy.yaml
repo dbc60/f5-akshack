@@ -5,7 +5,7 @@ metadata:
   labels:
     app: content-web
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: content-web
@@ -21,10 +21,10 @@ spec:
         - containerPort: 3000
         resources:
           requests:
-            cpu: 500m
+            cpu: 100m
             memory: 128M
           limits:
-            cpu: 500m
+            cpu: 100m
             memory: 128M
         env:
         - name: CONTENT_API_URL
