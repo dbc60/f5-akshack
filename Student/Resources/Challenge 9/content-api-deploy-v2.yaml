@@ -30,8 +30,18 @@ spec:
             cpu: 250m
             memory: 128M
         env:
+        - name: SECRET_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: username
+        - name: SECRET_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: password
         - name: MONGODB_CONNECTION
-          value: mongodb://mongodb-service:27017/contentdb
+          value: mongodb://$(SECRET_USERNAME):$(SECRET_PASSWORD)@mongodb-service:27017/contentdb?authSource=admin
         livenessProbe:
           httpGet:
             path: /stats
