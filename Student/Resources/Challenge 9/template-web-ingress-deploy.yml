@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web
+  name: content-web-service
 spec:
   ports:
   - port: 80
@@ -9,6 +9,7 @@ spec:
     targetPort: 3000
   selector:
     app: content-web
+    version: "2"
   type: ClusterIP
 ---
 apiVersion: extensions/v1beta1
@@ -22,7 +23,7 @@ spec:
   - http:
       paths:
       - backend:
-          serviceName: web
+          serviceName: content-web-service
           servicePort: 80
         path: /
 #    host: <myserviceuniquelabel>.<location>.cloudapp.azure.com  # Leave this line commented out until Part 2b
