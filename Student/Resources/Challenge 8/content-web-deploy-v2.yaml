@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-web-v2
+  labels:
+    app: content-web
+    version: "2"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: content-web
+      version: "2"
+  template:
+    metadata:
+      labels:
+        app: content-web
+        version: "2"
+    spec:
+      containers:
+      - name: content-web
+        image: whatthehackmsft/content-web:v2
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128M
+          limits:
+            cpu: 100m
+            memory: 128M
+        env:
+        - name: CONTENT_API_URL
+          value: http://content-api-service:3001
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 3
+          periodSeconds: 3

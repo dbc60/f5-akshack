@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-api
+  labels:
+    app: content-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-api
+  template:
+    metadata:
+      labels:
+        app: content-api
+    spec:
+      containers:
+      - name: content-api
+        image: kubernators.azurecr.io/content-api:latest
+        ports:
+        - containerPort: 3001
+        resources:
+          requests:
+            cpu: 500m
+            memory: 128M
+          limits:
+            cpu: 500m
+            memory: 128M
+        livenessProbe:
+          httpGet:
+            path: /stats
+            port: 3001
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /stats
+            port: 3001
+          initialDelaySeconds: 3
+          periodSeconds: 3
